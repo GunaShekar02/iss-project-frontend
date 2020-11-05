@@ -1,0 +1,74 @@
+.container {
+  height: 45px;
+  width: 200px;
+  background-color: #6c63ff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 2px 3px 10px #cdcbcb;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 700ms ease;
+}
+
+.container:hover {
+  background: #5348f5 radial-gradient(circle, transparent 1%, #5348f5 1%)
+    center/15000%;
+  /* background-color: #594ff7; */
+  box-shadow: 2px 5px 5px #9a9898;
+}
+
+.container:active {
+  background-color: #9a9898;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+.disabled {
+  background-color: #9a9898;
+  box-shadow: none;
+  transition: none;
+  cursor: not-allowed;
+}
+
+.disabled:hover {
+  background: none;
+  background-color: #9a9898;
+  box-shadow: none;
+}
+
+.logo {
+  height: 10px;
+  width: 10px;
+  animation: rotateAndGrow 2s infinite;
+}
+
+@keyframes rotateAndGrow {
+  0% {
+    height: 30%;
+    width: 30%;
+    transform: rotate(360deg);
+  }
+
+  50% {
+    height: 100%;
+    width: 100%;
+    transform: rotate(-360deg);
+  }
+
+  100% {
+    height: 30%;
+    width: 30%;
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .container {
+    height: 30px;
+    width: 120px;
+    font-size: 16px;
+  }
+}

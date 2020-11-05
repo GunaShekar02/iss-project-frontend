@@ -1,0 +1,143 @@
+.navbar {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  box-shadow: 0px 2px 10px #cdcbcb;
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex: 2;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.links {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
+
+.links > h2 {
+  font-size: 25px;
+  font-weight: 300;
+  cursor: pointer;
+  position: relative;
+}
+
+.links > h2::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #6c63ff;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.links > h2:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.hamburger > div {
+  right: 20px;
+  height: 5px;
+  width: 50px;
+  background-color: #6c63ff;
+  border-radius: 5px;
+  transition: all 300ms;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.mobileLinks {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  right: -100vw;
+  background-color: #6c63ff;
+  transition: all 200ms;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileLinks > h2 {
+  font-size: 25px;
+  font-weight: 300;
+  cursor: pointer;
+  position: relative;
+  color: white;
+}
+
+.mobileLinks > h2::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.mobileLinks > h2:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+@media only screen and (max-width: 1400px) {
+  .links {
+    flex: 2;
+  }
+
+  .links > h2 {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .logo {
+    height: 20px;
+    width: 20px;
+  }
+
+  .links > h2 {
+    font-size: 16px;
+  }
+}

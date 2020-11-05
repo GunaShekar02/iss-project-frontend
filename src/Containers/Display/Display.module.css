@@ -1,0 +1,75 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.certificateContainer {
+  width: 90vw;
+  height: 80vh;
+  border: 3px solid #6c63ff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  align-self: center;
+  font-size: 50px;
+  font-weight: 300;
+  margin: 0px;
+}
+
+.subtitle {
+  align-self: center;
+  font-size: 30px;
+  font-weight: 300;
+  margin: 0px;
+  margin-bottom: 30px;
+}
+
+.intro {
+  align-self: center;
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.name {
+  align-self: center;
+  font-size: 50px;
+  font-weight: 700;
+  color: #6c63ff;
+}
+
+.issuedBy {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 30px;
+  align-self: flex-start;
+}
+
+.logo {
+  height: 80px;
+  width: 60px;
+  margin: 0px 30px;
+}
+
+.issuers {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.signature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signImage {
+  height: 80px;
+  width: 200px;
+}
