@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Button from "../../Components/Button/Button";
@@ -12,6 +13,7 @@ import { fetchResults } from "../../services/results.service";
 const NodeRSA = require("node-rsa");
 
 const Results = () => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [privateKey, setPrivateKey] = useState();
   const [rollno, setRollno] = useState();
@@ -53,7 +55,7 @@ const Results = () => {
 
       const decryptedResult = private_key.decrypt(data, "utf8");
 
-      console.log(decryptedResult);
+      history.push("/display", { result: decryptedResult });
     } catch (err) {
       setIsLoading(false);
       notify("Something went wrong!", "error");

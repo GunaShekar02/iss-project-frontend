@@ -1,89 +1,43 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Button from "../../Components/Button/Button";
 
+import { adminLogin, verifyAdmin } from "../../services/auth.service";
+import { AuthContext } from "../../utils/Store";
+
 import styles from "./Display.module.css";
 
+import { ReactComponent as Logo } from "../../assets/images/logo.svg";
+
 const Display = () => {
-  const [fullCerti, setFullCerti] = useState();
-  const [certificateData, setCertificateData] = useState({});
-
-  const parser = (item) => item.split(":").slice(-1);
-
   const location = useLocation();
+  const history = useHistory();
+
+  const [resultObject, setResultObject] = useState({});
+
   useEffect(() => {
-    const {
-      state: { certificate },
-    } = location;
+    const result = location.state?.result;
+    if (!result) history.push("/results");
+    const parsedResult = JSON.parse(result);
+    delete parsedResult.name;
+    delete parsedResult.Rollno;
 
-    setFullCerti(certificate);
-
-    const {
-      data: {
-        heading,
-        context,
-        introduction,
-        student: { name },
-        content,
-        logo,
-        signature,
-      },
-    } = JSON.parse(certificate);
-
-    setCertificateData({
-      heading: parser(heading),
-      context: parser(context),
-      introduction: parser(introduction),
-      name: parser(name),
-      content: parser(content),
-      logo: `data:${parser(logo)}`,
-      signature: {
-        name: parser(signature.name),
-        image: `data:${parser(signature.image)}`,
-      },
-    });
-  }, [location]);
-
-  const saveJSON = () => {
-    const certiData = JSON.stringify(JSON.parse(fullCerti));
-    const blob = new Blob([certiData], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = "degree-certificate.json";
-    link.href = url;
-    link.click();
-  };
+    setResultObject(parsedResult);
+  }, []);
 
   return (
     <div className={styles.container}>
-      <div className={styles.certificateContainer}>
-        <h1 className={styles.title}>{certificateData.heading}</h1>
-        <h2 className={styles.subtitle}>{certificateData.context}</h2>
-        <span className={styles.intro}>{certificateData.introduction}</span>
-        <span className={styles.name}>{certificateData.name}</span>
-        <span className={styles.intro}>{certificateData.content}</span>
-        <div className={styles.issuedBy}>
-          <span className={styles.intro}>
-            This certificate has been issued by :
-          </span>
-          <div className={styles.issuers}>
-            <img
-              src={certificateData.logo}
-              className={styles.logo}
-              alt="Logo"
-            />
-            <div className={styles.signature}>
-              <img
-                src={certificateData.signature?.image}
-                className={styles.signImage}
-                alt="Signature"
-              />
-              {certificateData.signature?.name}
-            </div>
-          </div>
-          <Button title="Download" onClick={saveJSON} />
-        </div>
+      <h2 className={styles.title}>Results</h2>
+
+      <div className={styles.loginContainer}>
+        <Logo className={styles.logo} />
+        {Object.keys(resultObject).map((subject) => (
+          <p className={styles.input}>
+            {subject} : {resultObject[subject]}
+          </p>
+        ))}
       </div>
     </div>
   );
