@@ -27,7 +27,7 @@ const LandingPage = () => {
           <Button
             title="Let's Go!"
             className={styles.button}
-            onClick={() => history.push("/verify")}
+            onClick={() => history.push("/results")}
           />
         </div>
       </div>

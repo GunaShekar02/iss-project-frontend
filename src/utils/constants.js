@@ -4,6 +4,8 @@ export const REGISTER_URL = `${BASE_URL}/register`;
 export const VERIFY_URL = `${BASE_URL}/verify`;
 export const ADMIN_LOGIN_URL = `${BASE_URL}/login`;
 export const ADMIN_VERIFY_URL = `${BASE_URL}/verifyadmin`;
+export const UPLOAD_RESULTS_URL = `${BASE_URL}/addmarks`;
+export const STUDENT_LOGIN_URL = `${BASE_URL}/student/login`;
 
 const AUTH_URL = `${BASE_URL}/auth`;
 export const LOGIN_URL = `${AUTH_URL}/login`;

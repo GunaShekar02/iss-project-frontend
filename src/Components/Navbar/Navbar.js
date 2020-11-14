@@ -64,7 +64,7 @@ const Navbar = () => {
               ? type === "adminToken"
                 ? "- Admin"
                 : type === "userToken"
-                ? "- User"
+                ? `- ${sessionStorage.getItem("roll")}`
                 : null
               : null}
           </h1>
@@ -82,8 +82,8 @@ const Navbar = () => {
         ) : (
           <div className={styles.links}>
             <h2 onClick={() => history.push("/register")}>Register</h2>
-            <h2 onClick={() => history.push("/verify")}>Results</h2>
-            <h2 onClick={() => history.push("/issue")}>Admin</h2>
+            <h2 onClick={() => history.push("/results")}>Results</h2>
+            <h2 onClick={() => history.push("/upload")}>Admin</h2>
           </div>
         )}
       </div>
@@ -98,7 +98,7 @@ const Navbar = () => {
         </h2>
         <h2
           onClick={() => {
-            history.push("/verify");
+            history.push("/results");
             handleHamburgerClick();
           }}
         >
@@ -106,7 +106,7 @@ const Navbar = () => {
         </h2>
         <h2
           onClick={() => {
-            history.push("/issue");
+            history.push("/upload");
             handleHamburgerClick();
           }}
         >

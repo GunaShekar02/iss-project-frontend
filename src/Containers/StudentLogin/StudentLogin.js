@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 
 import Button from "../../Components/Button/Button";
 
-import { adminLogin, verifyAdmin } from "../../services/auth.service";
+import { adminLogin, studentLogin } from "../../services/auth.service";
 import { AuthContext } from "../../utils/Store";
 
-import styles from "./Login.module.css";
+import styles from "./StudentLogin.module.css";
 
 import { ReactComponent as Logo } from "../../assets/images/logo.svg";
 
@@ -16,15 +16,11 @@ const Login = () => {
   const auth = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [rollno, setRollno] = useState("");
   const [password, setPassword] = useState("");
   const [mailSent, setMailSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [token, setToken] = useState();
-
-  useEffect(() => {
-    if (auth.type === "adminToken") history.push("/upload");
-  }, []);
 
   const notify = (message, type) =>
     toast(message, {
@@ -40,7 +36,7 @@ const Login = () => {
   const sendEmail = async () => {
     try {
       setIsLoading(true);
-      await adminLogin(email, password);
+      await adminLogin(rollno, password);
 
       notify("Email Sent!", "success");
       setMailSent(true);
@@ -55,11 +51,12 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setIsLoading(true);
-      const data = await verifyAdmin(otp);
+      const data = await studentLogin(rollno, password);
       auth.setAuth(data.token);
-      auth.setType("adminToken");
+      auth.setType("userToken");
+      auth.setRoll(rollno);
       notify("Successfully logged in!", "success");
-      history.push("/upload");
+      history.push("/results");
     } catch (err) {
       throw err;
     } finally {
@@ -69,16 +66,16 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Admin Login</h2>
+      <h2 className={styles.title}>Student Login</h2>
       {!mailSent ? (
         <div className={styles.loginContainer}>
           <Logo className={styles.logo} />
           <input
             type="text"
-            placeholder="Enter Email"
+            placeholder="Enter Roll Number"
             className={styles.input}
-            value={email}
-            onChange={({ target: { value } }) => setEmail(value)}
+            value={rollno}
+            onChange={({ target: { value } }) => setRollno(value)}
           />
           <input
             type="password"
@@ -87,7 +84,7 @@ const Login = () => {
             value={password}
             onChange={({ target: { value } }) => setPassword(value)}
           />
-          <Button title="Get OTP" onClick={sendEmail} loading={isLoading} />
+          <Button title="Login" onClick={handleLogin} loading={isLoading} />
         </div>
       ) : (
         <div className={styles.loginContainer}>

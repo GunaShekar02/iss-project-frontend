@@ -10,6 +10,8 @@ import ProtectedRoute from "./Containers/ProtectedRoute/ProtectedRoute";
 import Results from "./Containers/Results/Results";
 import Register from "./Containers/Register/Register";
 import Display from "./Containers/Display/Display";
+import StudentProtectedRoute from "./Containers/StudentProtectedRoute/StudentProtectedRoute";
+import StudentLogin from "./Containers/StudentLogin/StudentLogin";
 
 import Navbar from "./Components/Navbar/Navbar";
 
@@ -25,19 +27,24 @@ const App = () => {
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/issue">
+        <Route exact path="/upload">
           <ProtectedRoute>
             <Issue />
           </ProtectedRoute>
         </Route>
-        <Route exact path="/verify">
-          <Results />
+        <Route exact path="/results">
+          <StudentProtectedRoute>
+            <Results />
+          </StudentProtectedRoute>
         </Route>
         <Route exact path="/register">
           <Register />
         </Route>
         <Route exact path="/display">
           <Display />
+        </Route>
+        <Route exact path="/student/login">
+          <StudentLogin />
         </Route>
       </Switch>
     </>
