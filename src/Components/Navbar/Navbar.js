@@ -10,7 +10,7 @@ import useMediaQuery from "../../utils/useMediaQuery";
 import { AuthContext } from "../../utils/Store";
 
 const Navbar = () => {
-  const { auth, type } = useContext(AuthContext);
+  const { auth, type, roll } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -64,7 +64,7 @@ const Navbar = () => {
               ? type === "adminToken"
                 ? "- Admin"
                 : type === "userToken"
-                ? `- ${sessionStorage.getItem("roll")}`
+                ? `- ${roll}`
                 : null
               : null}
           </h1>

@@ -22,6 +22,7 @@ const Store = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        roll,
         auth,
         setAuth: (token) => {
           setAuth(token);

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import Button from "../../Components/Button/Button";
 
@@ -6,13 +7,26 @@ import styles from "./Results.module.css";
 
 import { ReactComponent as Logo } from "../../assets/images/logo.svg";
 
-import { verifyCertificate } from "../../services/certificates.service";
+import { fetchResults } from "../../services/results.service";
+
+const NodeRSA = require("node-rsa");
 
 const Results = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [certificateData, setCertificateData] = useState();
-  const [verified, setVerified] = useState(false);
-  const [err, setErr] = useState();
+  const [privateKey, setPrivateKey] = useState();
+  const [rollno, setRollno] = useState();
+  const [sem, setSem] = useState();
+
+  const notify = (message, type) =>
+    toast(message, {
+      type,
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
 
   const onChange = (event) => {
     var reader = new FileReader();
@@ -21,20 +35,28 @@ const Results = () => {
   };
 
   const onReaderLoad = (event) => {
-    // const obj = JSON.parse(event.target.result);
-    // setCertificateData(obj);
-    console.log(event.target.result);
+    setPrivateKey(event.target.result);
   };
 
-  const handleVerify = async () => {
+  const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      await verifyCertificate(certificateData);
+      const data = await fetchResults(
+        rollno,
+        sem,
+        sessionStorage.getItem("token")
+      );
+      console.log(data);
       setIsLoading(false);
-      setVerified(true);
+
+      const private_key = new NodeRSA(privateKey);
+
+      const decryptedResult = private_key.decrypt(data, "utf8");
+
+      console.log(decryptedResult);
     } catch (err) {
       setIsLoading(false);
-      setErr(err.response.data.message);
+      notify("Something went wrong!", "error");
     }
   };
 
@@ -43,24 +65,29 @@ const Results = () => {
       <h2 className={styles.title}>Check Your Results</h2>
       <div className={styles.verifyContainer}>
         <Logo className={styles.logo} />
-        <label>
-          Enter Roll number
-          <input type="text" className={styles.input} />
-        </label>
-        <label>
-          Enter Semester number
-          <input type="text" className={styles.input} />
-        </label>
+        <input
+          type="text"
+          placeholder="Enter Roll Number"
+          className={styles.input}
+          value={rollno}
+          onChange={({ target: { value } }) => setRollno(value)}
+        />
+        <input
+          type="text"
+          placeholder="Enter Semester Number"
+          className={styles.input}
+          value={sem}
+          onChange={({ target: { value } }) => setSem(value)}
+        />
         <label>
           Upload your private key(This won't be sent to the server)
           <input type="file" className={styles.input} onChange={onChange} />
         </label>
-        <Button title="Verify" loading={isLoading} onClick={handleVerify} />
-      </div>
-      <div className={styles.result}>
-        {verified
-          ? `This certificate has been successfully verified on Blockchain! Certificate signature : ${certificateData?.signature?.targetHash}`
-          : err}
+        <Button
+          title="Get Results"
+          loading={isLoading}
+          onClick={handleSubmit}
+        />
       </div>
     </div>
   );
