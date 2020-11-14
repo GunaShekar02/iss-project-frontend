@@ -75,7 +75,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className={styles.links}>
-            <h2 onClick={() => history.push("/find")}>Register</h2>
+            <h2 onClick={() => history.push("/register")}>Register</h2>
             <h2 onClick={() => history.push("/verify")}>Results</h2>
             <h2 onClick={() => history.push("/issue")}>Admin</h2>
           </div>
@@ -84,7 +84,7 @@ const Navbar = () => {
       <div className={styles.mobileLinks} ref={mobileMenu}>
         <h2
           onClick={() => {
-            history.push("/find");
+            history.push("/register");
             handleHamburgerClick();
           }}
         >

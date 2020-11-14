@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import Button from "../../Components/Button/Button";
 
-import styles from "./Verify.module.css";
+import styles from "./Results.module.css";
 
 import { ReactComponent as Logo } from "../../assets/images/logo.svg";
 
 import { verifyCertificate } from "../../services/certificates.service";
 
-const Verify = () => {
+const Results = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [certificateData, setCertificateData] = useState();
   const [verified, setVerified] = useState(false);
@@ -21,8 +21,9 @@ const Verify = () => {
   };
 
   const onReaderLoad = (event) => {
-    const obj = JSON.parse(event.target.result);
-    setCertificateData(obj);
+    // const obj = JSON.parse(event.target.result);
+    // setCertificateData(obj);
+    console.log(event.target.result);
   };
 
   const handleVerify = async () => {
@@ -39,11 +40,19 @@ const Verify = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Verify a Certificate</h2>
+      <h2 className={styles.title}>Check Your Results</h2>
       <div className={styles.verifyContainer}>
         <Logo className={styles.logo} />
         <label>
-          Upload a json file containing the certificate
+          Enter Roll number
+          <input type="text" className={styles.input} />
+        </label>
+        <label>
+          Enter Semester number
+          <input type="text" className={styles.input} />
+        </label>
+        <label>
+          Upload your private key(This won't be sent to the server)
           <input type="file" className={styles.input} onChange={onChange} />
         </label>
         <Button title="Verify" loading={isLoading} onClick={handleVerify} />
@@ -57,4 +66,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default Results;

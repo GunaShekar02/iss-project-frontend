@@ -7,8 +7,8 @@ import LandingPage from "./Containers/LandingPage/LandingPage";
 import Login from "./Containers/Login/Login";
 import Issue from "./Containers/Issue/Issue";
 import ProtectedRoute from "./Containers/ProtectedRoute/ProtectedRoute";
-import Verify from "./Containers/Verify/Verify";
-import Find from "./Containers/Register/Register";
+import Results from "./Containers/Results/Results";
+import Register from "./Containers/Register/Register";
 import Display from "./Containers/Display/Display";
 
 import Navbar from "./Components/Navbar/Navbar";
@@ -31,10 +31,10 @@ const App = () => {
           </ProtectedRoute>
         </Route>
         <Route exact path="/verify">
-          <Verify />
+          <Results />
         </Route>
-        <Route exact path="/find">
-          <Find />
+        <Route exact path="/register">
+          <Register />
         </Route>
         <Route exact path="/display">
           <Display />
