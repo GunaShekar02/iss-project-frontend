@@ -10,7 +10,9 @@ import useMediaQuery from "../../utils/useMediaQuery";
 import { AuthContext } from "../../utils/Store";
 
 const Navbar = () => {
-  const { auth, type, roll } = useContext(AuthContext);
+  const { auth, type, roll, setAuth, setType, setRoll } = useContext(
+    AuthContext
+  );
 
   const history = useHistory();
 
@@ -43,6 +45,13 @@ const Navbar = () => {
       mobileMenu.current.style.right = "0vw";
       setShowMobileNav(true);
     }
+  };
+
+  const handleLogout = () => {
+    setAuth("");
+    setRoll("");
+    setType("");
+    history.push("/");
   };
 
   useEffect(() => {
@@ -81,21 +90,30 @@ const Navbar = () => {
           </div>
         ) : (
           <div className={styles.links}>
-            <h2 onClick={() => history.push("/register")}>Register</h2>
-            <h2 onClick={() => history.push("/results")}>Results</h2>
-            <h2 onClick={() => history.push("/upload")}>Admin</h2>
+            {!auth ? (
+              <h2 onClick={() => history.push("/register")}>Register</h2>
+            ) : null}
+            {type === "userToken" || !auth ? (
+              <h2 onClick={() => history.push("/results")}>Results</h2>
+            ) : null}
+            {type === "adminToken" || !auth ? (
+              <h2 onClick={() => history.push("/upload")}>Admin</h2>
+            ) : null}
+            {auth ? <h2 onClick={handleLogout}>Logout</h2> : null}
           </div>
         )}
       </div>
       <div className={styles.mobileLinks} ref={mobileMenu}>
-        <h2
-          onClick={() => {
-            history.push("/register");
-            handleHamburgerClick();
-          }}
-        >
-          Register
-        </h2>
+        {!auth ? (
+          <h2
+            onClick={() => {
+              history.push("/register");
+              handleHamburgerClick();
+            }}
+          >
+            Register
+          </h2>
+        ) : null}
         <h2
           onClick={() => {
             history.push("/results");
