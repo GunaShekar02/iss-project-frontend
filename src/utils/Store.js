@@ -4,13 +4,19 @@ export const AuthContext = createContext("");
 
 const Store = ({ children }) => {
   const [auth, setAuth] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
-    setAuth(sessionStorage.getItem("apikey"));
+    const adminToken = sessionStorage.getItem("adminToken");
+    if (adminToken) setAuth(adminToken);
+    else {
+      const userToken = sessionStorage.getItem("userToken");
+      if (userToken) setAuth(userToken);
+    }
   }, []);
 
   return (
-    <AuthContext.Provider value={[auth, setAuth]}>
+    <AuthContext.Provider value={{ auth, setAuth, type, setType }}>
       {children}
     </AuthContext.Provider>
   );

@@ -10,7 +10,7 @@ import useMediaQuery from "../../utils/useMediaQuery";
 import { AuthContext } from "../../utils/Store";
 
 const Navbar = () => {
-  const [auth] = useContext(AuthContext);
+  const { auth, type } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -47,7 +47,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const storageListener = () => {
-      console.log("LISTENER CALLED");
       console.log(sessionStorage.getItem("apikey"));
     };
     window.addEventListener("storage", storageListener);
@@ -60,7 +59,14 @@ const Navbar = () => {
         <div className={styles.brand} onClick={() => history.push("/")}>
           <Logo className={styles.logo} />
           <h1 className={styles.title}>
-            IIITM Results {auth ? "- Admin" : null}
+            IIITM Results{" "}
+            {auth
+              ? type === "adminToken"
+                ? "- Admin"
+                : type === "userToken"
+                ? "- User"
+                : null
+              : null}
           </h1>
         </div>
         {isMobile ? (

@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { LOGIN_URL, REGISTER_URL, VERIFY_URL } from "../utils/constants";
+import {
+  ADMIN_LOGIN_URL,
+  ADMIN_VERIFY_URL,
+  LOGIN_URL,
+  REGISTER_URL,
+  VERIFY_URL,
+} from "../utils/constants";
 
 export const register = async (rollno, password) => {
   try {
@@ -26,19 +32,21 @@ export const verify = async (otp, publicKey, token) => {
   }
 };
 
-export const login = async (apiKey) => {
+export const adminLogin = async (email, password) => {
   try {
-    await axios.post(
-      LOGIN_URL,
-      {},
-      {
-        headers: {
-          Authorization: apiKey,
-        },
-      }
-    );
+    const { data } = await axios.post(ADMIN_LOGIN_URL, { email, password });
 
-    sessionStorage.setItem("apikey", apiKey);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const verifyAdmin = async (otp) => {
+  try {
+    const { data } = await axios.put(ADMIN_VERIFY_URL, { otp });
+
+    return data;
   } catch (err) {
     throw err;
   }
