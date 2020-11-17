@@ -1,3 +1,3 @@
-# certblocks-frontend
+# iss-project-frontend
 
-Frontend for CertBlocks - A Cryptography and Blockchain Based Certificate Attestation and Storage System
+Frontend for Results Publishing System for IIITM - An Asymmetric Key Encryption based Examination Result Publishing System for IIITM.
