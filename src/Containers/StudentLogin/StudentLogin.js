@@ -58,6 +58,7 @@ const Login = () => {
       notify("Successfully logged in!", "success");
       history.push("/results");
     } catch (err) {
+      notify("Invalid Roll Number or Password!", "error");
       throw err;
     } finally {
       setIsLoading(false);
